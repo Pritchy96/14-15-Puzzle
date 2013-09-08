@@ -16,12 +16,10 @@ namespace TileEngine
     {
         
         //Outline of the tilemap
-        private Rectangle GridOutline;
+        private Rectangle gridRectangle;
         public Tile[,] tileArray;
-        private Tile MouseTile;
-        private Boolean MouseInGrid = false;
-
-        
+        private Tile mouseTile;
+       // private Boolean MouseInGrid = false;
         ArrayList imagePicker = new ArrayList();
         Random rand = new Random();
 
@@ -30,7 +28,7 @@ namespace TileEngine
         public IngameState(int width, int height, int TileSide)
         {
             //Gird outline.
-            GridOutline = new Rectangle(49, 9, width + 2, height + 2);
+            gridRectangle = new Rectangle(49, 9, width + 2, height + 2);
             //Creates the empty array
             tileArray = new Tile[(width / TileSide), (height / TileSide)];
 
@@ -55,7 +53,7 @@ namespace TileEngine
 
 
 
-            restart();
+            Restart();
         }
 
 
@@ -73,18 +71,10 @@ namespace TileEngine
             {
                 t.Draw(e);
             }
-
-            if (MouseInGrid)
-            {
-                e.Graphics.DrawRectangle(Pens.SandyBrown, tileArray[indexj, indexi].TileRectangle);
-            }
-
-            //e.Graphics.DrawRectangle(Pens.Black, GridOutline);
-
         }
 
         //Image changer for a single number, just supply the numbers of the tile as a parameter.
-        public void imageChange(int tileRow, int tileColumn)
+        public void ImageChange(int tileRow, int tileColumn)
         {
             //'Moving' the tile.
             try
@@ -100,7 +90,7 @@ namespace TileEngine
                         tileArray[tileRow - 1, tileColumn].TileImage = tileArray[tileRow, tileColumn].TileImage;
                         tileArray[tileRow, tileColumn].TileImage = Resources.tileEmpty;
                         //Checking method.
-                        winCheck();
+                        WinCheck();
                     }
                 }
                 //Right
@@ -110,7 +100,7 @@ namespace TileEngine
                     {
                         tileArray[tileRow + 1, tileColumn].TileImage = tileArray[tileRow, tileColumn].TileImage;
                         tileArray[tileRow, tileColumn].TileImage = Resources.tileEmpty;
-                        winCheck();
+                        WinCheck();
                     }
                 }
                 //Up
@@ -120,7 +110,7 @@ namespace TileEngine
                     {
                         tileArray[tileRow, tileColumn + 1].TileImage = tileArray[tileRow, tileColumn].TileImage;
                         tileArray[tileRow, tileColumn].TileImage = Resources.tileEmpty;
-                        winCheck();
+                        WinCheck();
                     }
                 }
                 //Down
@@ -130,7 +120,7 @@ namespace TileEngine
                     {
                         tileArray[tileRow, tileColumn - 1].TileImage = tileArray[tileRow, tileColumn].TileImage;
                         tileArray[tileRow, tileColumn].TileImage = Resources.tileEmpty;
-                        winCheck();
+                        WinCheck();
                     }
                 }
 
@@ -138,12 +128,12 @@ namespace TileEngine
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Error with imageChange. Probably numbers passed are too big.");
+                Console.WriteLine("Error with ImageChange. Probably numbers passed are too big.");
             }
         }
 
         //Checking to see if the user has won.
-        private void winCheck()
+        private void WinCheck()
         {
             int tilesCorrect = 0;
             for (int j = 0; j < tileArray.GetLength(0); j++)
@@ -178,13 +168,18 @@ namespace TileEngine
                 }
             }
 
-        //Mouse Interaction
-        int indexi;
-        int indexj;
 
         //Whenever the mouse is moved.
         public override void MouseMoved(MouseEventArgs e)
         {
+        }
+
+        public override void MouseClicked(MouseEventArgs e)
+        {
+            //Mouse Interaction
+            int indexi = 0;
+            int indexj = 0;
+
             for (int i = 0; i < tileArray.GetLength(1); i++)
             {
                 for (int j = 0; j < tileArray.GetLength(0); j++)
@@ -193,30 +188,16 @@ namespace TileEngine
                     {
                         indexi = i;
                         indexj = j;
-                        MouseTile = tileArray[j, i];
+                        mouseTile = tileArray[j, i];
                     }
                 }
-
-                if (GridOutline.Contains(e.Location))
-                {
-                    MouseInGrid = true;
-                }
-                else
-                {
-                    MouseInGrid = false;
-                }
             }
-        }
 
-        public override void MouseClicked(MouseEventArgs e)
-        {
-
-            Console.WriteLine(tileArray[indexj, indexi].TileRectangle.X);
-            imageChange(indexj, indexi);
+            ImageChange(indexj, indexi);
         }
 
         //Tilemap reconstruction.
-        public void restart()
+        public void Restart()
         {
             imagePicker.Clear();
 
@@ -227,7 +208,6 @@ namespace TileEngine
                 {
                     while (true)
                     {
-
                         int random = rand.Next(0, 16);
 
                         //Making sure that an image is only used once.
@@ -244,7 +224,7 @@ namespace TileEngine
             }
         }
 
-        public void save()
+        public void Save()
         {
             //Clears loadSave
             string sSave = "";
@@ -257,7 +237,7 @@ namespace TileEngine
                 Console.WriteLine("File Deleted");
             }
 
-            //Setting up the string to save.
+            //Setting up the string to Save.
             for (int e = 0; e < tileArray.GetLength(1); e++)
             {
                 for (int f = 0; f < tileArray.GetLength(0); f++)
@@ -271,7 +251,7 @@ namespace TileEngine
             Console.WriteLine("File Saved: " + sSave);
         }
 
-        public void load()
+        public void Load()
         {
             //Clears loadSave
             String sLoad = "";

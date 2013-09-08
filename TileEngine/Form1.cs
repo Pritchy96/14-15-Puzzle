@@ -112,17 +112,17 @@ namespace TileEngine
 
         private void Reset(object sender, EventArgs e)
         {
-            //TileMap.restart();
+            //TileMap.Restart();
         }
 
         private void Save(object sender, MouseEventArgs e)
         {
-        //    TileMap.save();
+        //    TileMap.Save();
         }
 
         private void Load(object sender, EventArgs e)
         {
-           // TileMap.load();
+           // TileMap.Load();
         }
     }
 }
