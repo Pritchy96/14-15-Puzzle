@@ -15,25 +15,26 @@ namespace TileEngine
         public static List<String> imageNames = new List<String>(16);
 
         //Image Import
-        public static Image tileEmpty = Image.FromFile("Images/Empty.png");
-        public static Image tileOne = Image.FromFile("Images/One.png");
-        public static Image tileTwo = Image.FromFile("Images/Two.png");
-        public static Image tileThree = Image.FromFile("Images/Three.png");
-        public static Image tileFour = Image.FromFile("Images/Four.png");
-        public static Image tileFive = Image.FromFile("Images/Five.png");
-        public static Image tileSix = Image.FromFile("Images/Six.png");
-        public static Image tileSeven = Image.FromFile("Images/Seven.png");
-        public static Image tileEight = Image.FromFile("Images/Eight.png");
-        public static Image tileNine = Image.FromFile("Images/Nine.png");
-        public static Image tileTen = Image.FromFile("Images/Ten.png");
-        public static Image tileEleven = Image.FromFile("Images/Eleven.png");
-        public static Image tileTwelve = Image.FromFile("Images/Twelve.png");
-        public static Image tileThirteen = Image.FromFile("Images/Thirteen.png");
-        public static Image tileFourteen = Image.FromFile("Images/Fourteen.png");
-        public static Image tileFifteen = Image.FromFile("Images/Fifteen.png");
-        public static Image tileSixteen = Image.FromFile("Images/Sixteen.png");
+        public static Image tileEmpty = Puzzler.Properties.Resources.Empty;
+        public static Image tileOne = Puzzler.Properties.Resources.One;
+        public static Image tileTwo = Puzzler.Properties.Resources.Two;
+        public static Image tileThree = Puzzler.Properties.Resources.Three;
+        public static Image tileFour = Puzzler.Properties.Resources.Four;
+        public static Image tileFive = Puzzler.Properties.Resources.Five;
+        public static Image tileSix = Puzzler.Properties.Resources.Six;
+        public static Image tileSeven = Puzzler.Properties.Resources.Seven;
+        public static Image tileEight = Puzzler.Properties.Resources.Eight;
+        public static Image tileNine = Puzzler.Properties.Resources.Nine;
+        public static Image tileTen = Puzzler.Properties.Resources.Ten;
+        public static Image tileEleven = Puzzler.Properties.Resources.Eleven;
+        public static Image tileTwelve = Puzzler.Properties.Resources.Twelve;
+        public static Image tileThirteen = Puzzler.Properties.Resources.Thirteen;
+        public static Image tileFourteen = Puzzler.Properties.Resources.Fourteen;
+        public static Image tileFifteen = Puzzler.Properties.Resources.Fifteen;
+        public static Image tileSixteen = Puzzler.Properties.Resources.Sixteen;
 
-        public static Image Background = Image.FromFile("Images/Background.png");
+        public static Image Background = Puzzler.Properties.Resources.Background;
+        public static Image MenuBackground  = Puzzler.Properties.Resources.MenuBackground;
 
         public static void Setup()
         {

@@ -17,6 +17,11 @@ namespace TileEngine
         
         //Outline of the tilemap
         private Rectangle gridRectangle;
+        Rectangle SaveButtonRect = new Rectangle(40, 648, 177, 53);
+        Rectangle LoadButtonRect = new Rectangle(262, 648, 177, 53);
+        Rectangle ResetButtonRect = new Rectangle(493, 648, 177, 53);
+
+
         public Tile[,] tileArray;
         private Tile mouseTile;
        // private Boolean MouseInGrid = false;
@@ -42,7 +47,7 @@ namespace TileEngine
                 for (int j = 0; j < tileArray.GetLength(0); j++)
                 {
                     //Creates a new tile using X and Y, position I, J.
-                    tileArray[j, i] = new Tile(X, Y, TileSide, Resources. tileEmpty, i);
+                    tileArray[j, i] = new Tile(X, Y, TileSide, Resources.tileEmpty, i);
                     //Increases X for creation/positioning of next tile.
                     X += TileSide;
                 }
@@ -53,7 +58,7 @@ namespace TileEngine
 
 
 
-            Restart();
+            Reset();
         }
 
 
@@ -176,6 +181,8 @@ namespace TileEngine
 
         public override void MouseClicked(MouseEventArgs e)
         {
+            if (gridRectangle.Contains(e.Location))
+            {
             //Mouse Interaction
             int indexi = 0;
             int indexj = 0;
@@ -194,10 +201,27 @@ namespace TileEngine
             }
 
             ImageChange(indexj, indexi);
+            }
+            else
+            {
+                if (SaveButtonRect.Contains(e.Location))
+                {
+                    Save();
+                }
+                else if (LoadButtonRect.Contains(e.Location))
+                {
+                    Load();
+                }
+
+                else if (ResetButtonRect.Contains(e.Location))
+                {
+                    Reset();
+                }
+            }
         }
 
         //Tilemap reconstruction.
-        public void Restart()
+        public void Reset()
         {
             imagePicker.Clear();
 
@@ -275,78 +299,3 @@ namespace TileEngine
 
     }
 }
-
-
-/*Assigning the numbers. A bit lame :/
-            tileArray[0, 0].TileImage = tileEmpty;
-            tileArray[1, 0].TileImage = tileOne;
-            tileArray[2, 0].TileImage = tileTwo;
-            tileArray[3, 0].TileImage = tileThree;
-
-            tileArray[0, 1].TileImage = tileFour;
-            tileArray[1, 1].TileImage = tileFive;
-            tileArray[2, 1].TileImage = tileSix;
-            tileArray[3, 1].TileImage = tileSeven;
-
-            tileArray[0, 2].TileImage = tileEight;
-            tileArray[1, 2].TileImage = tileNine;
-            tileArray[2, 2].TileImage = tileTen;
-            tileArray[3, 2].TileImage = tileEleven;
-
-            tileArray[0, 3].TileImage = tileTwelve;
-            tileArray[1, 3].TileImage = tileThirteen;
-            tileArray[2, 3].TileImage = tileFourteen;
-            tileArray[3, 3].TileImage = tileFifteen;
-
-
-
-            //Assigning the Images in the imageArray to the tiles in the tileArray.
-            for (int e = 0; e < tileArray.GetLength(1); e++)
-            {
-                for (int f = 0; f < tileArray.GetLength(0); f++)
-                {
-                    while (true)
-                    {
-                        double randomX = 0;
-                        double randomY = 0;
-                        double random = rand.Next(0, 17);
-
-                        if (random == 0)
-                        {
-                             randomX = 0;
-                             randomY = 0;
-                        }
-                        else
-                        {
-                            //Calculates the row the number is on.
-                             randomX = Math.Floor(random / 4);
-                            if (randomX == 4)
-                            {
-                                randomX = 3;
-                            }
-                             randomY = 0;
-
-                            // % wasn't working for some reason. Calculates remainder.
-                            double mod = (random / 4) - Math.Floor(random / 4);
-                            if (mod == 0)
-                            {
-                                randomY = 3;
-                            }
-                            else
-                            {
-                                randomY = Math.Floor(mod * 4);
-                            }
-                        }
-
-                            if (imagePicker.Contains(random.ToString()) == false)
-                            {
-                                imagePicker.Add(random.ToString());
-                                tileArray[f, e].TileImage = Resources.images[(int)randomX, (int)randomY];
-                                break;
-                            
-                        }
-                    }
-                }
-            }
-
-*/

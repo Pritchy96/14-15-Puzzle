@@ -9,6 +9,10 @@ namespace TileEngine
 {
     class GameManager
     {
+        int width = 0;
+        int height = 0;
+        int tileSide = 0;
+
         private BasicState currentState;
 
         public BasicState CurrentState
@@ -20,9 +24,16 @@ namespace TileEngine
         public GameManager(int width, int height, int tileSide)
         {
             Resources.Setup();
+            currentState = new MenuState(this);
+
+            this.width = width;
+            this.height = height;
+            this.tileSide = tileSide;
+        }
+
+        public void BeginGame()
+        {
             currentState = new IngameState(width, height, tileSide);
-            
-            //currentState = new MenuState();
         }
 
         //Whenever the mouse is moved.

@@ -14,9 +14,13 @@ namespace TileEngine
     //This class creates a matrix of tiles and visually creates & positions them.
     class MenuState : BasicState
     {
-        //Constructor. Creates the tileArray, imageArray, and sets the images of the tiles. 
-        public MenuState()
+
+        Rectangle playButtonRect = new Rectangle(150, 600, 400, 100);
+        GameManager manager;
+
+        public MenuState(GameManager manager)
         {
+            this.manager = manager;
         }
 
 
@@ -28,7 +32,7 @@ namespace TileEngine
 
         public override void Draw(PaintEventArgs e)
         {
-            e.Graphics.DrawImage(Resources.Background, new Rectangle(0, 0, 700, 720));
+            e.Graphics.DrawImage(Resources.MenuBackground, new Rectangle(0, 0, 700, 720));
 
         }
 
@@ -40,8 +44,10 @@ namespace TileEngine
 
         public override void MouseClicked(MouseEventArgs e)
         {
-
-
+            if (playButtonRect.Contains(e.Location))
+            {
+                manager.BeginGame();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace TileEngine
 {
-    public partial class Form1 : Form
+    public partial class GameScreen : Form
     {
         public static int WIDTH = 700;
         public static int HEIGHT = 720;
@@ -22,7 +22,7 @@ namespace TileEngine
 
      
         
-        public Form1()
+        public GameScreen()
         {
             InitializeComponent();
             SetScreenSize(WIDTH, HEIGHT);
