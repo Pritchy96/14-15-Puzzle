@@ -47,7 +47,7 @@ namespace TileEngine
                 for (int j = 0; j < tileArray.GetLength(0); j++)
                 {
                     //Creates a new tile using X and Y, position I, J.
-                    tileArray[j, i] = new Tile(X, Y, TileSide, Resources.tileEmpty, i);
+                    tileArray[j, i] = new Tile(X, Y, TileSide, Resources. tileEmpty, i);
                     //Increases X for creation/positioning of next tile.
                     X += TileSide;
                 }
@@ -55,9 +55,6 @@ namespace TileEngine
                 Y += TileSide;
                 X = 50;
             }
-
-
-
             Reset();
         }
 
@@ -252,14 +249,6 @@ namespace TileEngine
         {
             //Clears loadSave
             string sSave = "";
-            
-
-            //Delete file if exists.
-            if (File.Exists("c:\\SliderSave.txt"))
-            {
-                File.Delete("c:\\SliderSave.txt");
-                Console.WriteLine("File Deleted");
-            }
 
             //Setting up the string to Save.
             for (int e = 0; e < tileArray.GetLength(1); e++)
@@ -269,30 +258,35 @@ namespace TileEngine
                     sSave += tileArray[f, e].TileImage.Tag + ",";
                 }
             }
-            System.IO.StreamWriter saveFile = new System.IO.StreamWriter("c:\\SliderSave.txt");
-            saveFile.WriteLine(sSave);
-            saveFile.Close();
-            Console.WriteLine("File Saved: " + sSave);
+
+            Puzzler.Properties.Settings.Default.Save = sSave;
+            Puzzler.Properties.Settings.Default.Save();
         }
 
         public void Load()
         {
-            //Clears loadSave
-            String sLoad = "";
-            System.IO.StreamReader loadFile = new System.IO.StreamReader("c:\\SliderSave.txt");
-            sLoad = loadFile.ReadLine();
-            string[] loadedImages = sLoad.Split(',');
-            loadFile.Close();
+            try
+            {
+                string[] loadedImages = Puzzler.Properties.Settings.Default.Save.ToString().Split(',');
+
+                for (int e = 0; e < tileArray.GetLength(1); e++)
+                {
+                    for (int f = 0; f < tileArray.GetLength(0); f++)
+                    {
+                        //Getting the index by finding the string in the ImageNames list and returning its index.
+                        tileArray[e, f].TileImage = (Image)Resources.images[Resources.imageNames.IndexOf(loadedImages[(4 * f) + e])];
+                    }
+                }
+
+            }
+            catch
+            {
+
+            }
+
 
             
-            for (int e = 0; e < tileArray.GetLength(1); e++)
-            {
-                for (int f = 0; f < tileArray.GetLength(0); f++)
-                {
-                    //Getting the index by finding the string in the ImageNames list and returning its index.
-                    tileArray[e, f].TileImage = (Image)Resources.images[Resources.imageNames.IndexOf(loadedImages[(4 * f) + e])];
-                }
-            }
+
 
         }
 
