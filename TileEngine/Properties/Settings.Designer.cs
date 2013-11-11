@@ -22,22 +22,5 @@ namespace Puzzler.Properties {
                 return defaultInstance;
             }
         }
-        
-        /// <summary>
-        /// Save Tile Positions
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Save Tile Positions")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Test, if you can read this stuff has broken,")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string Save {
-            get {
-                return ((string)(this["Save"]));
-            }
-            set {
-                this["Save"] = value;
-            }
-        }
     }
 }
