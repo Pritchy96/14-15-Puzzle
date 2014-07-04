@@ -14,7 +14,7 @@ namespace TileEngine
     //This class creates a matrix of tiles and visually creates & positions them.
     class IngameState : BasicState
     {
-        
+
         //Outline of the tilemap
         private Rectangle gridRectangle;
         Rectangle SaveButtonRect = new Rectangle(40, 648, 177, 53);
@@ -24,7 +24,7 @@ namespace TileEngine
 
         public Tile[,] tileArray;
         private Tile mouseTile;
-       // private Boolean MouseInGrid = false;
+        // private Boolean MouseInGrid = false;
         ArrayList imagePicker = new ArrayList();
         Random rand = new Random();
 
@@ -159,19 +159,19 @@ namespace TileEngine
                         //Remember it starts at 0 so we do not need to -1
                         imageNumber = (4 * j) + i;
                     }
-                    
+
                     if (tileArray[i, j].TileImage == Resources.images[imageNumber])
                     {
                         tilesCorrect++;
                     }
                 }
             }
-                
-                if (tilesCorrect == tileArray.Length)
-                {
-                    tileArray[0, 0].TileImage = Resources.tileOne;
-                }
+
+            if (tilesCorrect == tileArray.Length)
+            {
+                tileArray[0, 0].TileImage = Resources.tileOne;
             }
+        }
 
 
         //Whenever the mouse is moved.
@@ -183,24 +183,24 @@ namespace TileEngine
         {
             if (gridRectangle.Contains(e.Location))
             {
-            //Mouse Interaction
-            int indexi = 0;
-            int indexj = 0;
+                //Mouse Interaction
+                int indexi = 0;
+                int indexj = 0;
 
-            for (int i = 0; i < tileArray.GetLength(1); i++)
-            {
-                for (int j = 0; j < tileArray.GetLength(0); j++)
+                for (int i = 0; i < tileArray.GetLength(1); i++)
                 {
-                    if (tileArray[j, i].TileRectangle.Contains(e.Location))
+                    for (int j = 0; j < tileArray.GetLength(0); j++)
                     {
-                        indexi = i;
-                        indexj = j;
-                        mouseTile = tileArray[j, i];
+                        if (tileArray[j, i].TileRectangle.Contains(e.Location))
+                        {
+                            indexi = i;
+                            indexj = j;
+                            mouseTile = tileArray[j, i];
+                        }
                     }
                 }
-            }
 
-            ImageChange(indexj, indexi);
+                ImageChange(indexj, indexi);
             }
             else
             {
@@ -238,7 +238,7 @@ namespace TileEngine
                         if (imagePicker.Contains(random.ToString()) == false)
                         {
                             imagePicker.Add(random.ToString());
-                            tileArray[f, e].TileImage = (Image) Resources.images[random];
+                            tileArray[f, e].TileImage = (Image)Resources.images[random];
                             tileArray[f, e].TileImage.Tag = Resources.imageNames[random];
                             break;
 
@@ -252,12 +252,12 @@ namespace TileEngine
         {
             //Clears loadSave
             string sSave = "";
-            
+
 
             //Delete file if exists.
-            if (File.Exists("c:\\SliderSave.txt"))
+            if (File.Exists(Application.StartupPath + "/SliderSave.txt"))
             {
-                File.Delete("c:\\SliderSave.txt");
+                File.Delete(Application.StartupPath + "/SliderSave.txt");
                 Console.WriteLine("File Deleted");
             }
 
@@ -269,7 +269,7 @@ namespace TileEngine
                     sSave += tileArray[f, e].TileImage.Tag + ",";
                 }
             }
-            System.IO.StreamWriter saveFile = new System.IO.StreamWriter("c:\\SliderSave.txt");
+            System.IO.StreamWriter saveFile = new System.IO.StreamWriter(Application.StartupPath + "/SliderSave.txt");
             saveFile.WriteLine(sSave);
             saveFile.Close();
             Console.WriteLine("File Saved: " + sSave);
@@ -279,18 +279,20 @@ namespace TileEngine
         {
             //Clears loadSave
             String sLoad = "";
-            System.IO.StreamReader loadFile = new System.IO.StreamReader("c:\\SliderSave.txt");
-            sLoad = loadFile.ReadLine();
-            string[] loadedImages = sLoad.Split(',');
-            loadFile.Close();
-
-            
-            for (int e = 0; e < tileArray.GetLength(1); e++)
+            if (File.Exists(Application.StartupPath + "/SliderSave.txt"))
             {
-                for (int f = 0; f < tileArray.GetLength(0); f++)
+                System.IO.StreamReader loadFile = new System.IO.StreamReader(Application.StartupPath + "/SliderSave.txt");
+                sLoad = loadFile.ReadLine();
+                string[] loadedImages = sLoad.Split(',');
+                loadFile.Close();
+
+                for (int e = 0; e < tileArray.GetLength(1); e++)
                 {
-                    //Getting the index by finding the string in the ImageNames list and returning its index.
-                    tileArray[e, f].TileImage = (Image)Resources.images[Resources.imageNames.IndexOf(loadedImages[(4 * f) + e])];
+                    for (int f = 0; f < tileArray.GetLength(0); f++)
+                    {
+                        //Getting the index by finding the string in the ImageNames list and returning its index.
+                        tileArray[e, f].TileImage = (Image)Resources.images[Resources.imageNames.IndexOf(loadedImages[(4 * f) + e])];
+                    }
                 }
             }
 
